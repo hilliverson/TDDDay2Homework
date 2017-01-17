@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassLibrary
 {
@@ -8,16 +10,26 @@ namespace ClassLibrary
         {
         }
 
-        public int CaculateMoney(string book)
+        public double CaculateMoney(List<Book> books)
         {
-            if(book.Equals("Potter1")|| book.Equals("Potter2")|| book.Equals("Potter3")|| book.Equals("Potter4")|| book.Equals("Potter5"))
+
+            if (books != null)
             {
-                return 100;
+                if(books.GroupBy(i => i.name).Count()>1)
+                {
+                    return books.Count * 100 * 0.95;
+                }
+                else
+                {
+                    return books.Count * 100;
+                }
+
             }
             else
             {
                 return 0;
             }
+
         }
     }
 }
