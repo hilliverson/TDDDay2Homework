@@ -15,7 +15,12 @@ namespace ClassLibrary
 
             if (books != null)
             {
-                if(books.GroupBy(i => i.name).Count() > 2)
+                if(books.GroupBy(i => i.name).Count() > 3)
+                {
+                    return books.Count * 100 * 0.8;
+                }
+
+                else if (books.GroupBy(i => i.name).Count() > 2)
                 {
                     return books.Count * 100 * 0.9;
                 }
