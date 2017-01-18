@@ -17,7 +17,13 @@ namespace ClassLibrary
 
             if (books != null)
             {
-                if(BooksGroupBy(books) > 3)
+                
+                if(BooksGroupBy(books) > 4)
+                {
+                    //五本不同的優惠價
+                    return FiveDifferentDiscount(books.Count);
+                }
+                else if(BooksGroupBy(books) > 3)
                 {
                     //四本不同的優惠價
                     return FourDifferentDiscount(books.Count);
@@ -45,6 +51,11 @@ namespace ClassLibrary
                 return 0;
             }
 
+        }
+
+        private double FiveDifferentDiscount(int num)
+        {
+            return num * _potterPrice * 0.75;
         }
 
         private double Normal(int num)
