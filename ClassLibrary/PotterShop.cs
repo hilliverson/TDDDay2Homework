@@ -14,63 +14,80 @@ namespace ClassLibrary
 
         public double CaculateMoney(List<Book> books)
         {
-
-            if (books != null)
+            double TotalPrice = 0.0;   
+            while (books.Count > 0)
             {
-                
-                if(BooksGroupBy(books) > 4)
+                if (BooksGroupBy(books) > 4)
                 {
                     //五本不同的優惠價
-                    return FiveDifferentDiscount(books.Count);
+                    TotalPrice+=FiveDifferentDiscount();
                 }
-                else if(BooksGroupBy(books) > 3)
+                else if (BooksGroupBy(books) > 3)
                 {
                     //四本不同的優惠價
-                    return FourDifferentDiscount(books.Count);
+                    TotalPrice += FourDifferentDiscount();
                 }
                 else if (BooksGroupBy(books) > 2)
                 {
                     //三本不同的優惠價
-                    return ThreeDifferentDiscount(books.Count);
-                    
+                    TotalPrice += ThreeDifferentDiscount();
                 }
                 else if (BooksGroupBy(books) > 1)
                 {
                     //兩本不同的優惠價
-                    return TwoDifferentDiscount(books.Count);
-                    
+                    TotalPrice += TwoDifferentDiscount();
                 }
                 else
                 {
                     //一般價格
-                    return Normal(books.Count);
+                    TotalPrice += Normal();
+                }
+                books = DelBook(books);
+            }
+
+            return TotalPrice;
+
+        }
+
+        private List<Book> DelBook(List<Book> books)
+        {
+            List<Book> FilterBooks = new List<Book>();
+            foreach(var book in books)
+            {
+                if(book.num>1)
+                {
+                    book.num = book.num - 1;
+                    FilterBooks.Add(book);
                 }
             }
-            else
-            {
-                return 0;
-            }
-
+            return FilterBooks;
         }
 
-        private double FiveDifferentDiscount(int num)
+        
+
+        private double Normal()
         {
-            return num * _potterPrice * 0.75;
+            return 1 * _potterPrice;
         }
 
-        private double Normal(int num)
+        private double TwoDifferentDiscount()
         {
-            return num * _potterPrice;
+            return 2 * _potterPrice * 0.95;
         }
 
-        private double TwoDifferentDiscount(int num)
+        private double ThreeDifferentDiscount()
         {
-            return num * _potterPrice * 0.95;
+            return 3 * _potterPrice * 0.9;
         }
 
-        private double ThreeDifferentDiscount(int num)
+        private double FourDifferentDiscount()
         {
-            return num * _potterPrice * 0.9;
+            return 4 * _potterPrice * 0.8;
+        }
+
+        private double FiveDifferentDiscount()
+        {
+            return 5 * _potterPrice * 0.75;
         }
 
         private int BooksGroupBy(List<Book> books)
@@ -78,9 +95,5 @@ namespace ClassLibrary
             return books.GroupBy(i => i.name).Count();
         }
 
-        private double FourDifferentDiscount(int num)
-        {
-            return num * _potterPrice * 0.8;
-        }
     }
 }
