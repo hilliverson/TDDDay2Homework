@@ -6,8 +6,10 @@ namespace ClassLibrary
 {
     public class PotterShop
     {
+        private int _potterPrice;//書本價錢
         public PotterShop()
         {
+            _potterPrice = 100;
         }
 
         public double CaculateMoney(List<Book> books)
@@ -15,32 +17,59 @@ namespace ClassLibrary
 
             if (books != null)
             {
-                if(books.GroupBy(i => i.name).Count() > 3)
+                if(BooksGroupBy(books) > 3)
                 {
-                    return books.Count * 100 * 0.8;
+                    //四本不同的優惠價
+                    return FourDifferentDiscount(books.Count);
                 }
-
-                else if (books.GroupBy(i => i.name).Count() > 2)
+                else if (BooksGroupBy(books) > 2)
                 {
-                    return books.Count * 100 * 0.9;
+                    //三本不同的優惠價
+                    return ThreeDifferentDiscount(books.Count);
+                    
                 }
-
-                else if (books.GroupBy(i => i.name).Count()>1)
+                else if (BooksGroupBy(books) > 1)
                 {
-                    return books.Count * 100 * 0.95;
+                    //兩本不同的優惠價
+                    return TwoDifferentDiscount(books.Count);
+                    
                 }
-
                 else
                 {
-                    return books.Count * 100;
+                    //一般價格
+                    return Normal(books.Count);
                 }
-
             }
             else
             {
                 return 0;
             }
 
+        }
+
+        private double Normal(int num)
+        {
+            return num * _potterPrice;
+        }
+
+        private double TwoDifferentDiscount(int num)
+        {
+            return num * _potterPrice * 0.95;
+        }
+
+        private double ThreeDifferentDiscount(int num)
+        {
+            return num * _potterPrice * 0.9;
+        }
+
+        private int BooksGroupBy(List<Book> books)
+        {
+            return books.GroupBy(i => i.name).Count();
+        }
+
+        private double FourDifferentDiscount(int num)
+        {
+            return num * _potterPrice * 0.8;
         }
     }
 }
