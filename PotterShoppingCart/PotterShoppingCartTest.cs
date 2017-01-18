@@ -68,5 +68,23 @@ namespace PotterShoppingCart
             var actual = target.CaculateMoney(books);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void TestBuyFiveBook()
+        {
+            var target = new PotterShop();
+            List<Book> books = new List<Book>
+            {
+                 new Book() { name = "Potter1"},
+                 new Book() { name = "Potter2"},
+                 new Book() { name = "Potter3"},
+                 new Book() { name = "Potter4"},
+                 new Book() { name = "Potter5"}
+
+            };
+            var expected = 375;
+            var actual = target.CaculateMoney(books);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
