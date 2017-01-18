@@ -14,7 +14,7 @@ namespace PotterShoppingCart
             var target = new PotterShop();
             List<Book> books =new List<Book>
             {
-                 new Book() { name = "Potter1"}
+                 new Book() { name = "Potter1",num=1}
             };
             var expected = 100;
             var actual = target.CaculateMoney(books);
@@ -27,8 +27,8 @@ namespace PotterShoppingCart
             var target = new PotterShop();
             List<Book> books = new List<Book>
             {
-                 new Book() { name = "Potter1"},
-                 new Book() { name = "Potter2"}
+                 new Book() { name = "Potter1",num=1},
+                 new Book() { name = "Potter2",num=1}
                
             };
             var expected = 190;
@@ -42,9 +42,9 @@ namespace PotterShoppingCart
             var target = new PotterShop();
             List<Book> books = new List<Book>
             {
-                 new Book() { name = "Potter1"},
-                 new Book() { name = "Potter2"},
-                 new Book() { name = "Potter3"}
+                 new Book() { name = "Potter1",num=1},
+                 new Book() { name = "Potter2",num=1},
+                 new Book() { name = "Potter3",num=1}
 
             };
             var expected = 270;
@@ -58,10 +58,10 @@ namespace PotterShoppingCart
             var target = new PotterShop();
             List<Book> books = new List<Book>
             {
-                 new Book() { name = "Potter1"},
-                 new Book() { name = "Potter2"},
-                 new Book() { name = "Potter3"},
-                 new Book() { name = "Potter4"}
+                 new Book() { name = "Potter1",num=1},
+                 new Book() { name = "Potter2",num=1},
+                 new Book() { name = "Potter3",num=1},
+                 new Book() { name = "Potter4",num=1}
 
             };
             var expected = 320;
@@ -75,16 +75,33 @@ namespace PotterShoppingCart
             var target = new PotterShop();
             List<Book> books = new List<Book>
             {
-                 new Book() { name = "Potter1"},
-                 new Book() { name = "Potter2"},
-                 new Book() { name = "Potter3"},
-                 new Book() { name = "Potter4"},
-                 new Book() { name = "Potter5"}
+                 new Book() { name = "Potter1",num=1},
+                 new Book() { name = "Potter2",num=1},
+                 new Book() { name = "Potter3",num=1},
+                 new Book() { name = "Potter4",num=1},
+                 new Book() { name = "Potter5",num=1}
 
             };
             var expected = 375;
             var actual = target.CaculateMoney(books);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void test一二集各買了一本第三集買了兩本()
+        {
+            var target = new PotterShop();
+            List<Book> books = new List<Book>
+            {
+                 new Book() { name = "Potter1",num=1},
+                 new Book() { name = "Potter2",num=1},
+                 new Book() { name = "Potter3",num=2},
+ 
+            };
+            var expected = 370;
+            var actual = target.CaculateMoney(books);
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }
