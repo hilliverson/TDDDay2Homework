@@ -6,12 +6,7 @@ namespace ClassLibrary
 {
     public class PotterShop
     {
-        private int _potterPrice;//書本價錢
-        public PotterShop()
-        {
-            _potterPrice = 100;
-        }
-
+       
         public double CaculateMoney(List<Book> books)
         {
             double TotalPrice = 0.0;   
@@ -20,33 +15,50 @@ namespace ClassLibrary
                 if (BooksGroupBy(books) > 4)
                 {
                     //五本不同的優惠價
-                    TotalPrice+=FiveDifferentDiscount();
+                    TotalPrice += Discount(books,GetDiscountNum(4));
                 }
                 else if (BooksGroupBy(books) > 3)
                 {
                     //四本不同的優惠價
-                    TotalPrice += FourDifferentDiscount();
+                    TotalPrice += Discount(books,GetDiscountNum(3));
                 }
                 else if (BooksGroupBy(books) > 2)
                 {
                     //三本不同的優惠價
-                    TotalPrice += ThreeDifferentDiscount();
+                    TotalPrice += Discount(books, GetDiscountNum(2));
                 }
                 else if (BooksGroupBy(books) > 1)
                 {
                     //兩本不同的優惠價
-                    TotalPrice += TwoDifferentDiscount();
+                    TotalPrice += Discount(books, GetDiscountNum(1));
                 }
                 else
                 {
                     //一般價格
-                    TotalPrice += Normal();
+                    TotalPrice += Discount(books, GetDiscountNum(0));
                 }
                 books = DelBook(books);
             }
 
             return TotalPrice;
 
+        }
+
+        private double GetDiscountNum(int num)
+        {
+            switch(num)
+            {
+                case 4:
+                    return 0.75;//五本折扣
+                case 3:
+                    return 0.8;//四本折扣
+                case 2:
+                    return 0.9;//三本折扣
+                case 1:
+                    return 0.95;//兩本折扣
+                default:
+                    return 1;//無折扣
+            }
         }
 
         private List<Book> DelBook(List<Book> books)
@@ -63,33 +75,16 @@ namespace ClassLibrary
             return FilterBooks;
         }
 
-        
-
-        private double Normal()
+        private double Normal(List<Book> books)
         {
-            return 1 * _potterPrice;
+            return books.Sum(e => e.price);
         }
 
-        private double TwoDifferentDiscount()
+        private double Discount(List<Book> books,double discounts)
         {
-            return 2 * _potterPrice * 0.95;
+            return books.Sum(e => e.price) * discounts;
         }
-
-        private double ThreeDifferentDiscount()
-        {
-            return 3 * _potterPrice * 0.9;
-        }
-
-        private double FourDifferentDiscount()
-        {
-            return 4 * _potterPrice * 0.8;
-        }
-
-        private double FiveDifferentDiscount()
-        {
-            return 5 * _potterPrice * 0.75;
-        }
-
+      
         private int BooksGroupBy(List<Book> books)
         {
             return books.GroupBy(i => i.name).Count();
